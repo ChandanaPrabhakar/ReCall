@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
 import PasswordInput from '../../components/Inputs/PasswordInput';
-import {validateEmail} from '../../utils/helper';
+import { validateEmail } from '../../utils/helper';
 
 const Login = () => {
 
@@ -13,13 +13,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if(!validateEmail(email)){
+    if (!validateEmail(email)) {
       setError('Please enter a valid email address');
       return;
     }
 
-    if(!password) {
-      setError('Please enter valid password');
+    if (!password) {
+      setError('Please enter password');
       return;
     }
 
@@ -46,7 +46,10 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type='submit' className='btn-primary' >Login</button>
+
+            {error && <p className='text-red-500 text-xs pb-1'>{error}</p>}
+
+            <button type='submit' className='btn-primary cursor-pointer' >Login</button>
             <p className='text-sm mt-4 text-center'>
               Not registered yet? {""} <Link to="/signup" className="font-medium text-primary underline">Create an Account</Link></p>
           </form>
