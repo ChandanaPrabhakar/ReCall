@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
-import { addNoteService, editNoteService, getAllNotesService } from "../services/noteServices";
+import { addNoteService, editNoteService, getAllNotesService, deleteNoteService } from "../services/noteServices";
 
 export const addNoteController = async(req: Request, res: Response) => {
     const {title, content, tags} = req.body;
@@ -50,5 +50,21 @@ export const getAllNotesController = async(req: Request, res:Response) => {
     }catch(error){
         console.error('Error fetching notes', error);
         res.status(500).json({message: 'Internal serer error'});
+    }
+}
+
+export const deleteNoteController = async(req: Request, res: Response) => {
+    const {noteId} = req.params;
+    const {user} = req.user as jwt.JwtPayload;
+
+    try{
+        const data = await deleteNoteService(noteId, user);
+        if(!data?.success){
+            return res.status(404).json({message: data?.message});
+        }
+        res.status(200).json({message: data?.message});
+    }catch(error){
+        console.error("Failed deleting note", error);
+        res.status(500).json({message: 'Internal server error'});
     }
 }
