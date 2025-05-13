@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import {databaseConnection} from './config/db';
-import routers from './routes/authRoutes';
+import authRouters from './routes/authRoutes';
 
 dotenv.config();
 databaseConnection();
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors({
     origin:'*'
 }));
-app.use('/api/auth', routers);
+app.use('/api/auth', authRouters);
 
 
 const PORT = process.env.PORT || 8000;
