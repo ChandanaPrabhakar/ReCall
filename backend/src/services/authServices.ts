@@ -1,5 +1,5 @@
 import { signupInput } from "../models/signupInput.model";
-import { UserDBModel } from "../models/user.model";
+import { User, UserDBModel } from "../models/user.model";
 import jwt from 'jsonwebtoken';
 
 export const signupService = async (data: signupInput) => {
@@ -64,6 +64,30 @@ export const loginService = async (email: string, password: string) => {
         return {
             success: false,
             message: "Invalid credentials"
+        }
+    }
+}
+
+export const getUserService = async(user: User) =>{
+    try{
+        const userDetails = await UserDBModel.findOne({_id: user.user._id});
+
+        if(!userDetails){
+            return{
+                success: false,
+                message: 'User not found.'
+            }
+        }
+
+        return{
+            success: true,
+            user: {fullName: userDetails.fullName, email: userDetails.email, "_id": userDetails._id, createdOn: userDetails.createdOn},
+            message: 'User details retrieved successfully.'
+        }
+    }catch(error){
+        return{
+            success: false,
+            message: 'Unable to fetch user details.'
         }
     }
 }
