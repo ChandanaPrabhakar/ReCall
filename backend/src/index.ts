@@ -1,10 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
-import { authenticationToken } from './utils/utilities';
 import {databaseConnection} from './config/db';
-import router from './routes/authRoutes';
+import routers from './routes/authRoutes';
 
 dotenv.config();
 databaseConnection();
@@ -14,7 +12,7 @@ app.use(express.json());
 app.use(cors({
     origin:'*'
 }));
-app.use('/authq', router);
+app.use('/api/auth', routers);
 
 
 const PORT = process.env.PORT || 8000;
