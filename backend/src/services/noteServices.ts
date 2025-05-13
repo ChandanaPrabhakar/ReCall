@@ -22,7 +22,6 @@ export const addNoteService = async (title: string, content: string, tags: strin
     return {
       success: false,
       message: "Failed to add note.",
-      error,
     };
   }
 };
@@ -42,15 +41,51 @@ export const editNoteService = async (noteId: string, title: string, content: st
   if (tags) note.tags = tags;
   if (isPinned) note.isPinned = isPinned;
 
-  const updatedNote = await note.save();
+  try {
+    const updatedNote = await note.save();
 
-  return {
-    success: true,
-    updatedNote,
-    message: "Note updated successfully"
+    return {
+      success: true,
+      updatedNote,
+      message: "Note updated successfully"
+    }
+  } catch (error) {
+    return {
+      success: true,
+      message: "Failed to update note."
+    }
   }
+
+
 }
 
+export const updateNotePinnedService = async (noteId: string, isPinned: boolean, user: User) => {
+  const note = await NoteDBModel.findOne({ _id: noteId, userId: user.user._id });
+
+  if (!note) {
+    return {
+      success: false,
+      message: "Note not found"
+    }
+  }
+
+  if (isPinned) note.isPinned = isPinned;
+
+  try {
+    const updatedNote = await note.save();
+
+    return {
+      success: true,
+      updatedNote,
+      message: "Note updated successfully"
+    }
+  } catch (error) {
+    return {
+      success: true,
+      message: "Failed to update note."
+    }
+  }
+}
 
 export const getAllNotesService = async (user: User) => {
   try {
