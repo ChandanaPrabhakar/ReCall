@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
-import { addNoteService, editNoteService } from "../services/noteServices";
+import { addNoteService, editNoteService, getAllNotesService } from "../services/noteServices";
 
 export const addNoteController = async(req: Request, res: Response) => {
     const {title, content, tags} = req.body;
@@ -38,5 +38,17 @@ export const editNoteController = async(req: Request, res: Response) => {
     }catch(error){
         console.error("Failed editing note", error);
         res.status(500).json({message: 'Internal server error'});
+    }
+}
+
+export const getAllNotesController = async(req: Request, res:Response) => {
+    const { user } = req.user as jwt.JwtPayload;
+
+    try{
+        const data = await getAllNotesService(user);
+        res.status(200).json({data, message: data?.message});
+    }catch(error){
+        console.error('Error fetching notes', error);
+        res.status(500).json({message: 'Internal serer error'});
     }
 }

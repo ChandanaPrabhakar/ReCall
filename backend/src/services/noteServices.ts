@@ -55,3 +55,20 @@ export const editNoteService = async(noteId: string, title: string, content: str
     message: "Note updated successfully"
   }
 }
+
+
+export const getAllNotesService = async(user: User) => {
+  try {
+    const notes = await NoteDBModel.find({userId: user.user._id}).sort({isPinned: -1});
+    return{
+      success: true,
+      notes,
+      message: "All notes retrieved successfully."
+    }
+  }catch(error){
+    return{
+      success: false,
+      message: "Failed to fetch notes."
+    }
+  }
+}
