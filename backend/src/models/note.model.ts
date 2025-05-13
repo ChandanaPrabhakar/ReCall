@@ -3,7 +3,7 @@ import mongoose, { Document, Model } from "mongoose";
 export interface Note extends Document {
     title: string;
     content: string;
-    tags?: string;
+    tags?: string[];
     isPinned: boolean;
     userId: string;
     createdOn?: Date;

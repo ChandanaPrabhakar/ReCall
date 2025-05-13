@@ -1,4 +1,4 @@
-import NoteDBModel from "../models/note.model";
+import NoteDBModel, { Note } from "../models/note.model";
 import {User} from "../models/user.model";
 
 export const addNoteService = async (
@@ -31,3 +31,27 @@ export const addNoteService = async (
     };
   }
 };
+
+export const editNoteService = async(noteId: string, title: string, content: string, tags: string[], isPinned: boolean, user: User) => {
+  const note = await NoteDBModel.findOne({_id: noteId, userId: user.user._id});
+
+  if(!note){
+    return{
+      success: false,
+      message: "Note not found"
+    }
+  }
+
+  if(title) note.title = title;
+  if(content) note.content = content;
+  if(tags) note.tags = tags;
+  if(isPinned) note.isPinned = isPinned;
+
+  const updatedNote = await note.save();
+
+  return{
+    success: true,
+    updatedNote,
+    message: "Note updated successfully"
+  }
+}
