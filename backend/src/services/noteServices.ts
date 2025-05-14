@@ -1,13 +1,14 @@
-import NoteDBModel, { Note } from "../models/note.model";
+import NoteDBModel from "../models/note.model";
 import { User } from "../models/user.model";
 
-export const addNoteService = async (title: string, content: string, tags: string[], user: User) => {
+export const addNoteService = async (title: string, content: string, tags: string[], _id: string) => {
+
   try {
     const newNote = new NoteDBModel({
       title,
       content,
       tags,
-      userId: user.user._id
+      userId: _id
     });
 
     const savedNote = await newNote.save();
@@ -26,8 +27,8 @@ export const addNoteService = async (title: string, content: string, tags: strin
   }
 };
 
-export const editNoteService = async (noteId: string, title: string, content: string, tags: string[], isPinned: boolean, user: User) => {
-  const note = await NoteDBModel.findOne({ _id: noteId, userId: user.user._id });
+export const editNoteService = async (noteId: string, title: string, content: string, tags: string[], isPinned: boolean, _id: string) => {
+  const note = await NoteDBModel.findOne({ _id: noteId, userId: _id });
 
   if (!note) {
     return {
@@ -59,8 +60,8 @@ export const editNoteService = async (noteId: string, title: string, content: st
 
 }
 
-export const updateNotePinnedService = async (noteId: string, isPinned: boolean, user: User) => {
-  const note = await NoteDBModel.findOne({ _id: noteId, userId: user.user._id });
+export const updateNotePinnedService = async (noteId: string, isPinned: boolean, _id: string) => {
+  const note = await NoteDBModel.findOne({ _id: noteId, userId: _id });
 
   if (!note) {
     return {
@@ -87,9 +88,9 @@ export const updateNotePinnedService = async (noteId: string, isPinned: boolean,
   }
 }
 
-export const getAllNotesService = async (user: User) => {
+export const getAllNotesService = async (_id: string) => {
   try {
-    const notes = await NoteDBModel.find({ userId: user.user._id }).sort({ isPinned: -1 });
+    const notes = await NoteDBModel.find({ userId: _id }).sort({ isPinned: -1 });
     return {
       success: true,
       notes,
@@ -103,10 +104,10 @@ export const getAllNotesService = async (user: User) => {
   }
 }
 
-export const deleteNoteService = async (noteId: string, user: User) => {
+export const deleteNoteService = async (noteId: string, _id: string) => {
 
   try {
-    const note = await NoteDBModel.findOneAndDelete({ _id: noteId, userId: user.user._id });
+    const note = await NoteDBModel.findOneAndDelete({ _id: noteId, userId: _id });
 
     if (note) {
       return {

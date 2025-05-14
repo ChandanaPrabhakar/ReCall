@@ -2,18 +2,18 @@ import { Request, Response } from "express";
 import { signupService, loginService, getUserService } from "../services/authServices";
 import jwt from 'jsonwebtoken';
 
-export const signupController = async (req: Request, res: Response) => {
+export const signupController = async (req: Request, res: Response): Promise<void> => {
     const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
-        return res.status(400).json({ message: 'All fields are required' });
+        res.status(400).json({ message: 'All fields are required' });
     }
 
     try {
         const data = await signupService(req.body);
 
         if (!data?.success) {
-           return res.status(400).json({ message: data?.message });
+            res.status(400).json({ message: data?.message });
         }
         res.status(201).json({ data });
 
@@ -23,40 +23,40 @@ export const signupController = async (req: Request, res: Response) => {
     }
 }
 
-export const loginController = async (req: Request, res: Response) => {
-    const {email, password} = req.body;
+export const loginController = async (req: Request, res: Response): Promise<void> => {
+    const { email, password } = req.body;
 
-    if(!email || !password) {
-        return res.status(400).json({message: "credentials are required"});
+    if (!email || !password) {
+        res.status(400).json({ message: "credentials are required" });
     }
 
-    try{
+    try {
         const data = await loginService(email, password);
 
-        if(!data?.success){
-            return res.status(404).json({message: data?.message});
+        if (!data?.success) {
+            res.status(404).json({ message: data?.message });
         }
-        res.status(200).json({data});
+        res.status(200).json({ data });
 
-    }catch(error) {
+    } catch (error) {
         console.error("something went wrong", error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
-export const getUserController = async(req: Request, res:Response) => {
-    const {user} = req.user as jwt.JwtPayload;
+export const getUserController = async (req: Request, res: Response): Promise<void> => {
+    const { _id } = req.user as jwt.JwtPayload;
 
-    try{
-        const data = await getUserService(user);
+    try {
+        const data = await getUserService(_id);
 
-        if(!data?.success){
-            return res.status(404).json({message: data?.message});
+        if (!data?.success) {
+            res.status(404).json({ message: data?.message });
         }
 
-        res.status(201).json({data, message: data?.message});
-    }catch(error){
+        res.status(201).json({ data, message: data?.message });
+    } catch (error) {
         console.error("Error fetching user details", error);
-        res.status(500).json({message: 'Internal server error'});
+        res.status(500).json({ message: 'Internal server error' });
     }
 }
