@@ -10,14 +10,14 @@ export const signupService = async (data: signupInput) => {
             message: "User already exists, please login."
         };
 
-        const newUser = new UserDBModel(data);
-        await newUser.save();
+        const user = new UserDBModel(data);
+        await user.save();
 
-        const accessToken = jwt.sign({newUser }, process.env.ACCESS_TOKEN_SECRET as string,{expiresIn: '36000m'});
+        const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET as string,{expiresIn: '36000m'});
 
         return {
             success: true,
-            user: newUser,
+            user: user,
             accessToken,
             message: "User registered successfully.",
         };
@@ -44,7 +44,8 @@ export const loginService = async (email: string, password: string) => {
         }
 
         if(userInfo.email === email && userInfo.password === password){
-            const accessToken = jwt.sign({userInfo}, process.env.ACCESS_TOKEN_SECRET as string, {expiresIn: "36000m"});
+            const user = userInfo;
+            const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET as string, {expiresIn: "36000m"});
 
             return {
                 success: true,
@@ -67,9 +68,9 @@ export const loginService = async (email: string, password: string) => {
     }
 }
 
-export const getUserService = async(user: User) =>{
+export const getUserService = async(userId: string) =>{
     try{
-        const userDetails = await UserDBModel.findOne({_id: user._id});
+        const userDetails = await UserDBModel.findOne({_id: userId});
 
         if(!userDetails){
             return{

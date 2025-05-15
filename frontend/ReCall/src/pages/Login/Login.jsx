@@ -36,10 +36,7 @@ const Login = () => {
         password: password,
       })
 
-      console.log(response.data.accessToken);
-
       if (response.data?.accessToken) {
-        console.log('has access token')
         localStorage.setItem('token', response.data.accessToken);
         navigate('/dashboard');
       }
