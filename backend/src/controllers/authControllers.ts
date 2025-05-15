@@ -45,10 +45,10 @@ export const loginController = async (req: Request, res: Response): Promise<void
 }
 
 export const getUserController = async (req: Request, res: Response): Promise<void> => {
-    const { _id } = req.user as jwt.JwtPayload;
+    const { user } = req.user as jwt.JwtPayload;
 
     try {
-        const data = await getUserService(_id);
+        const data = await getUserService(user.user);
 
         if (!data?.success) {
             res.status(404).json({ message: data?.message });
