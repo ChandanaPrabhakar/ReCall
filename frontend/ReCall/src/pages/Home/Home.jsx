@@ -6,6 +6,8 @@ import AddEditNotes from './AddEditNotes';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
+import {EmptyCard} from '../../components/EmptyCard/EmptyCard';
+import AddNoteImg from '../../assets/Add-notes.svg';
 
 const Home = () => {
 
@@ -16,50 +18,89 @@ const Home = () => {
   });
 
   const [userInfo, setUserInfo] = useState("");
+  const [allNotes, setAllNotes] = useState([]);
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
 
   const getUserInfo = async () => {
     try {
       const response = await axiosInstance.get('/get-user');
 
-      console.log('im here');
-
-      console.log(localStorage.getItem('token'));
-
-      console.log(response.data);
-
       if (response.data?.user) {
         setUserInfo(response.data.user);
       }
     } catch (error) {
-      setError( error.response.status === 401);
-      localStorage.clear();
-      navigate('/login');
+      if (error.response.status === 401) {
+        localStorage.clear();
+        navigate('/login');
+      }
+    }
+  }
+
+  //Get all notes
+
+  const getAllNotes = async () => {
+    try {
+      const response = await axiosInstance.get('/get-all-notes');
+      if (response.data?.notes) {
+        setAllNotes(response.data.notes);
+      }
+    } catch (error) {
+      console.log("An unexpected error occured. Please try again later.");
+    }
+  }
+
+  const handleEditNote = async (noteDetails) => {
+    setOpenAddEditModal({
+      isShown: true,
+      type: 'edit',
+      data: noteDetails
+    })
+  }
+
+  const deleteNote = async (data) => {
+    const noteId = data._id;
+    try {
+      const response = await axiosInstance.delete('/delete-note/noteId/' + noteId);
+      console.log(!response.data?.success);
+      if (!response.data?.success) {
+        getAllNotes();
+      }
+    } catch (error) {
+      if (error.response?.data?.message) {
+        console.log("An unexpected error occured, Please try again later");
+      }
     }
   }
 
   useEffect(() => {
+    getAllNotes();
     getUserInfo();
-    return () => {}
-  },[]);
+    return () => { }
+  }, []);
 
   return (
     <>
-      <Navbar userInfo = {userInfo}/>
+      <Navbar userInfo={userInfo} />
       <div className='container mx-auto'>
-        <div className='grid grid-cols-3 gap-4 mt-8'>
-          <NoteCards
-            title="Meeting on 7th april"
-            date="3rd April 2025"
-            content="Meeting on 7th April 2025"
-            tags="#meeting"
-            isPinned={true}
-            onEdit={() => { }}
-            onDelete={() => { }}
-            onPinnedNote={() => { }}
-          />
-        </div>
+        {allNotes.length > 0 ? (
+          <div className='grid grid-cols-3 gap-4 mt-8'>
+            {allNotes.map((item, index) => (
+              <NoteCards
+                key={item._id}
+                title={item.title}
+                date={item.createdOn}
+                content={item.content}
+                tags={item.tags}
+                isPinned={item.isPinned}
+                onEdit={() => handleEditNote(item)}
+                onDelete={() => deleteNote(item)}
+                onPinnedNote={() => { }}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyCard imgSrc = {AddNoteImg} message={`Start creating your notes! click ADD button to note down your thoughts, ideas, and remainders. Lets get strarted!!`}  />
+        )}
       </div>
 
       <button
@@ -88,12 +129,14 @@ const Home = () => {
       >
         <AddEditNotes
           type={openAddEditModal.type}
-          data={openAddEditModal.data}
+          noteData={openAddEditModal.data}
           onClose={() => {
             setOpenAddEditModal({
               isShown: false, type: "add", data: null
             })
-          }} />
+          }}
+          getAllNotes={getAllNotes}
+        />
       </Modal>
     </>
   )
