@@ -13,7 +13,7 @@ export const signupService = async (data: signupInput) => {
         const newUser = new UserDBModel(data);
         await newUser.save();
 
-        const accessToken = jwt.sign({ _id: newUser._id, email: newUser.email, fullName: newUser.fullName }, process.env.ACCESS_TOKEN_SECRET as string,{expiresIn: '36000m'});
+        const accessToken = jwt.sign({newUser }, process.env.ACCESS_TOKEN_SECRET as string,{expiresIn: '36000m'});
 
         return {
             success: true,
@@ -44,7 +44,7 @@ export const loginService = async (email: string, password: string) => {
         }
 
         if(userInfo.email === email && userInfo.password === password){
-            const accessToken = jwt.sign({_id: userInfo._id, email: userInfo.email, fullName: userInfo.fullName}, process.env.ACCESS_TOKEN_SECRET as string, {expiresIn: "36000m"});
+            const accessToken = jwt.sign({userInfo}, process.env.ACCESS_TOKEN_SECRET as string, {expiresIn: "36000m"});
 
             return {
                 success: true,
@@ -67,9 +67,9 @@ export const loginService = async (email: string, password: string) => {
     }
 }
 
-export const getUserService = async(_id: string) =>{
+export const getUserService = async(user: User) =>{
     try{
-        const userDetails = await UserDBModel.findOne({_id: _id});
+        const userDetails = await UserDBModel.findOne({_id: user._id});
 
         if(!userDetails){
             return{
