@@ -11,7 +11,7 @@ export const addNoteController = async (req: Request, res: Response): Promise<vo
     }
 
     try {
-        const data = await addNoteService(title, content, tags, user.user);
+        const data = await addNoteService(title, content, tags, user._id);
         res.status(200).json({ data, message: data?.message });
 
     } catch (error) {
@@ -30,7 +30,7 @@ export const editNoteController = async (req: Request, res: Response): Promise<v
     }
 
     try {
-        const data = await editNoteService(noteId, title, content, tags, isPinned, user.user);
+        const data = await editNoteService(noteId, title, content, tags, isPinned, user._id);
         if (!data?.success) {
             res.status(404).json({ message: data?.message });
         }
@@ -47,7 +47,7 @@ export const updateNotePinnedController = async (req: Request, res: Response): P
     const { user } = req.user as jwt.JwtPayload;
 
     try {
-        const data = await updateNotePinnedService(noteId, isPinned, user.user);
+        const data = await updateNotePinnedService(noteId, isPinned, user._id);
         if (!data?.success) {
             res.status(404).json({ message: data?.message });
         }
@@ -62,7 +62,7 @@ export const getAllNotesController = async (req: Request, res: Response): Promis
     const { user } = req.user as jwt.JwtPayload;
 
     try {
-        const data = await getAllNotesService(user.user);
+        const data = await getAllNotesService(user._id);
         res.status(200).json({ data, message: data?.message });
     } catch (error) {
         console.error('Error fetching notes', error);
@@ -75,7 +75,7 @@ export const deleteNoteController = async (req: Request, res: Response): Promise
     const { user } = req.user as jwt.JwtPayload;
 
     try {
-        const data = await deleteNoteService(noteId, user.user);
+        const data = await deleteNoteService(noteId, user._id);
         if (!data?.success) {
             res.status(404).json({ message: data?.message });
         }
