@@ -1,0 +1,32 @@
+<svg width="690" height="630" viewBox="0 0 690 630" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect x="0.778015" y="148.35" width="360" height="428" rx="20" transform="rotate(-17.5772 0.778015 148.35)" fill="white"/>
+<rect x="10.1928" y="153.235" width="345" height="413" rx="12.5" transform="rotate(-17.5772 10.1928 153.235)" stroke="#649D7E" stroke-opacity="0.64" stroke-width="15"/>
+<rect x="79.979" y="205.274" width="55.5063" height="43.4647" transform="rotate(-17.58 79.979 205.274)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="100" y="273.765" width="55.5063" height="43.4647" transform="rotate(-17.58 100 273.765)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="120" y="341.765" width="55.5063" height="43.4647" transform="rotate(-17.58 120 341.765)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="140" y="409.765" width="55.5063" height="43.4647" transform="rotate(-17.58 140 409.765)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="150" y="189.343" width="110" height="9" rx="4.5" transform="rotate(-17.0991 150 189.343)" fill="#D9D9D9"/>
+<rect x="163" y="209.283" width="120" height="9" rx="4.5" transform="rotate(-17.0991 163 209.283)" fill="#D9D9D9"/>
+<rect x="206.086" y="104.224" width="360" height="428" rx="20" transform="rotate(-1.0475 206.086 104.224)" fill="white"/>
+<rect x="213.722" y="111.585" width="345" height="413" rx="12.5" transform="rotate(-1.0475 213.722 111.585)" stroke="#649D7E" stroke-opacity="0.64" stroke-width="15"/>
+<rect x="265.818" y="181.329" width="55.5063" height="43.4647" transform="rotate(-1.05028 265.818 181.329)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="265.525" y="252.686" width="55.5063" height="43.4647" transform="rotate(-1.05028 265.525 252.686)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="265.352" y="323.565" width="55.5063" height="43.4647" transform="rotate(-1.05028 265.352 323.565)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="265.178" y="394.445" width="55.5063" height="43.4647" transform="rotate(-1.05028 265.178 394.445)" fill="#D9D9D9" fill-opacity="0.77"/>
+<rect x="344" y="188.093" width="110" height="9" rx="4.5" transform="rotate(-0.56935 344 188.093)" fill="#D9D9D9"/>
+<rect x="344" y="209.192" width="120" height="9" rx="4.5" transform="rotate(-0.56935 344 209.192)" fill="#D9D9D9"/>
+<rect x="344" y="345.192" width="120" height="9" rx="4.5" transform="rotate(-0.56935 344 345.192)" fill="#D9D9D9"/>
+<rect x="344" y="418.192" width="100" height="9" rx="4.5" transform="rotate(-0.56935 344 418.192)" fill="#D9D9D9"/>
+<rect x="344" y="394.192" width="120" height="9" rx="4.5" transform="rotate(-0.56935 344 394.192)" fill="#D9D9D9"/>
+<rect x="344" y="324.192" width="120" height="9" rx="4.5" transform="rotate(-0.56935 344 324.192)" fill="#D9D9D9"/>
+<rect x="344" y="276.192" width="120" height="9" rx="4.5" transform="rotate(-0.56935 344 276.192)" fill="#D9D9D9"/>
+<rect x="344" y="253.192" width="120" height="9" rx="4.5" transform="rotate(-0.56935 344 253.192)" fill="#D9D9D9"/>
+<circle cx="574" cy="503" r="65" fill="black"/>
+<rect x="539" y="468" width="70" height="70" fill="url(#pattern0_10_43)"/>
+<defs>
+<pattern id="pattern0_10_43" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_10_43" transform="scale(0.0111111)"/>
+</pattern>
+<image id="image0_10_43" width="90" height="90" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1klEQVR4nO3byUoDQRRA0ezirP/g9HkOIILDQvDrVNw4G8FPMIIuw5U2DQ5E7YaOlXp9D2STTV5f3qIDVZ2OJEmSpPCAaWAq9RwhAUvAMfDIhwfgCFhMPV8IwPq3wN8VwddSz5k1YA7o8bc7YDb1vNkCdqluJ/W82QLOa4Q+Sz1vtoDXGqFfUs+bLWpKPW+2MLShQ8GNNnQouNGGDgU32tCh4EYbOhTcaEOHghtt6FBwow0dCm60oUPBjTZ0KLjRhg6Ftm50cb4N2C5OBQHPtE+/fPatsZ31K05sAtepn3SCXAEr4zjVaeTRp1ibO58NHI74EQ0dNBm6OOyt0XpNRe4Cgx9+RLy36Ro6l9DlVle53tBWvUYil6EPUj/NBNtr+vWueG/UV7fAQmOhy9grxv7iAlhuNPKn2DPAJnBa/h1tmz5wAmwULTpRUFPqebOFoQ0dCm60oUPBjTZ0KLjRhg4FN9rQoeBGGzoU3GhDh4IbbehQcKMNHQputKFDwY02dCi40f8Wul+j9dM/jRUPw4s5VZ2knjdbDG+AVbWRet7cr9tdVYh8GeosXArAKnDzS+TrsZ3qbBtgHtgvbx4Mys99+d186vlCYnh5qZk7I5IkSZI6k+wNJgs9CuOiKBgAAAAASUVORK5CYII="/>
+</defs>
+</svg>
