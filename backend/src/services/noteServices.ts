@@ -1,6 +1,4 @@
-import { Regex } from "lucide-react";
 import NoteDBModel from "../models/note.model";
-import { User } from "../models/user.model";
 
 export const addNoteService = async (title: string, content: string, tags: string[], userId: string) => {
 
@@ -131,13 +129,16 @@ export const deleteNoteService = async (noteId: string, userId: string) => {
   }
 }
 
-export const searchNoteService = async (userId: string, query: unknown) => {
+export const searchNoteService = async (userId: string, query: string) => {
   try {
+
+    const notes = await NoteDBModel.find({userId: userId})
+
     const matchingNote = await NoteDBModel.find({
-      _id: userId,
+      userId: userId,
       $or: [
-        { title: { $regex: new Regex(query, "i") } },
-        { content: { $regex: new Regex(query, "i") } }
+        { title: { $regex: new RegExp(query, "i") } },
+        { content: { $regex: new RegExp(query, "i") } }
       ]
     })
 
