@@ -50,6 +50,7 @@ export const updateNotePinnedController = async (req: Request, res: Response): P
         const data = await updateNotePinnedService(noteId, isPinned, user._id);
         if (!data?.success) {
             res.status(404).json({ message: data?.message });
+            return;
         }
         res.status(200).json({ data, message: data?.message });
     } catch (error) {
