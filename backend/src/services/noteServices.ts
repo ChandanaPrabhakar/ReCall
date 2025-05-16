@@ -1,3 +1,4 @@
+import { Regex } from "lucide-react";
 import NoteDBModel from "../models/note.model";
 import { User } from "../models/user.model";
 
@@ -61,7 +62,7 @@ export const editNoteService = async (noteId: string, title: string, content: st
 }
 
 export const updateNotePinnedService = async (noteId: string, isPinned: boolean, userId: string) => {
-  const note = await NoteDBModel.findOne({ _id: noteId, userId: userId  });
+  const note = await NoteDBModel.findOne({ _id: noteId, userId: userId });
 
   if (!note) {
     return {
@@ -90,7 +91,7 @@ export const updateNotePinnedService = async (noteId: string, isPinned: boolean,
 
 export const getAllNotesService = async (userId: string) => {
   try {
-    const notes = await NoteDBModel.find({ userId: userId  }).sort({ isPinned: -1 });
+    const notes = await NoteDBModel.find({ userId: userId }).sort({ isPinned: -1 });
     return {
       success: true,
       notes,
@@ -107,7 +108,7 @@ export const getAllNotesService = async (userId: string) => {
 export const deleteNoteService = async (noteId: string, userId: string) => {
 
   try {
-    const note = await NoteDBModel.findOneAndDelete({ _id: noteId, userId: userId  });
+    const note = await NoteDBModel.findOneAndDelete({ _id: noteId, userId: userId });
 
     if (note) {
       return {
@@ -126,6 +127,38 @@ export const deleteNoteService = async (noteId: string, userId: string) => {
     return {
       success: false,
       message: "Failed to delete note."
+    };
+  }
+}
+
+export const searchNoteService = async (userId: string, query: unknown) => {
+  try {
+    const matchingNote = await NoteDBModel.find({
+      _id: userId,
+      $or: [
+        { title: { $regex: new Regex(query, "i") } },
+        { content: { $regex: new Regex(query, "i") } }
+      ]
+    })
+
+    if (!matchingNote) {
+      return {
+        success: false,
+        message: "Note matching note found"
+      }
+    } else {
+      return {
+        success: true,
+        note: matchingNote,
+        message: "Matching note found"
+      }
+    }
+  } catch (error) {
+    console.error("Error finding note:", error);
+
+    return {
+      success: false,
+      message: "Failed to find note."
     };
   }
 }
