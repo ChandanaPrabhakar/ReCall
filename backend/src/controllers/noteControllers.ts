@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
-import { addNoteService, editNoteService, updateNotePinnedService, getAllNotesService, deleteNoteService } from "../services/noteServices";
+import { addNoteService, editNoteService, updateNotePinnedService, getAllNotesService, deleteNoteService, searchNoteService } from "../services/noteServices";
 
 export const addNoteController = async (req: Request, res: Response): Promise<void> => {
     const { title, content, tags } = req.body;
@@ -82,6 +82,29 @@ export const deleteNoteController = async (req: Request, res: Response): Promise
         res.status(200).json({ message: data?.message });
     } catch (error) {
         console.error("Failed deleting note", error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const searchNoteController = async (req: Request, res: Response): Promise<void> => {
+    const { user } = req.user as jwt.JwtPayload;
+    const { query } = req.query;
+    if (!query) {
+        res.status(400).json({ message: 'search query is required' });
+        return;
+    }
+
+    try {
+        const data = await searchNoteService(user._id, query);
+        if (!data?.success) {
+            res.status(404).json({ message: data?.message });
+            return;
+        }
+
+        res.status(200).json({ data, message: data?.message });
+
+    } catch (error) {
+        console.error("Failed to search note", error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }
