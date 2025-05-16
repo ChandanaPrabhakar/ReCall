@@ -6,8 +6,9 @@ import AddEditNotes from './AddEditNotes';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
-import {EmptyCard} from '../../components/EmptyCard/EmptyCard';
+import { EmptyCard } from '../../components/EmptyCard/EmptyCard';
 import AddNoteImg from '../../assets/Add-notes.svg';
+import Toast from '../../components/ToastMessage/Toast';
 
 const Home = () => {
 
@@ -17,9 +18,36 @@ const Home = () => {
     data: null,
   });
 
+  const [showToastMessage, setShowToastMessage] = useState({
+    isShown: false,
+    message: "",
+    type: 'add'
+  });
+
   const [userInfo, setUserInfo] = useState("");
   const [allNotes, setAllNotes] = useState([]);
   const navigate = useNavigate();
+
+  //Show Toast
+
+  const handleShowToast = (message, type) => {
+    setShowToastMessage({
+      isShown: true,
+      message,
+      type
+    })
+  }
+
+  //Toast Close
+
+  const handleCloseToast = () => {
+    setShowToastMessage({
+      isShown: false,
+      message: ""
+    })
+  }
+
+  //Get user info
 
   const getUserInfo = async () => {
     try {
@@ -49,6 +77,8 @@ const Home = () => {
     }
   }
 
+  //Edit Note
+
   const handleEditNote = async (noteDetails) => {
     setOpenAddEditModal({
       isShown: true,
@@ -57,12 +87,14 @@ const Home = () => {
     })
   }
 
+  //Delete Note
+
   const deleteNote = async (data) => {
     const noteId = data._id;
     try {
       const response = await axiosInstance.delete('/delete-note/noteId/' + noteId);
-      console.log(!response.data?.success);
       if (!response.data?.success) {
+        handleShowToast("Note deleted sucessfully", 'delete')
         getAllNotes();
       }
     } catch (error) {
@@ -99,7 +131,7 @@ const Home = () => {
             ))}
           </div>
         ) : (
-          <EmptyCard imgSrc = {AddNoteImg} message={`Start creating your notes! click ADD button to note down your thoughts, ideas, and remainders. Lets get strarted!!`}  />
+          <EmptyCard imgSrc={AddNoteImg} message={`Start creating your notes! click ADD button to note down your thoughts, ideas, and remainders. Lets get strarted!!`} />
         )}
       </div>
 
@@ -136,8 +168,16 @@ const Home = () => {
             })
           }}
           getAllNotes={getAllNotes}
+          handleShowToast={handleShowToast}
         />
       </Modal>
+
+      <Toast
+        isShown={showToastMessage.isShown}
+        message={showToastMessage.message}
+        type={showToastMessage.type}
+        onClose={handleCloseToast}
+      />
     </>
   )
 }
