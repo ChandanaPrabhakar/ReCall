@@ -89,6 +89,11 @@ export const deleteNoteController = async (req: Request, res: Response): Promise
 export const searchNoteController = async (req: Request, res: Response): Promise<void> => {
     const { user } = req.user as jwt.JwtPayload;
     const { query } = req.query;
+
+    if (typeof query !== 'string') {
+        throw new Error('Search query must be a string');
+    }
+
     if (!query) {
         res.status(400).json({ message: 'search query is required' });
         return;
