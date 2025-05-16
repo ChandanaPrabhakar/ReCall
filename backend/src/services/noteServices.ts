@@ -69,7 +69,7 @@ export const updateNotePinnedService = async (noteId: string, isPinned: boolean,
     }
   }
 
-  if (isPinned) note.isPinned = isPinned;
+  note.isPinned = isPinned;
 
   try {
     const updatedNote = await note.save();
