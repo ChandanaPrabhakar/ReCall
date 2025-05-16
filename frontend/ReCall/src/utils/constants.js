@@ -1,1 +1,1 @@
-export const BASE_URL= 'http://localhost:8000/api/auth'
+export const BASE_URL= 'https://recall-a3ry.onrender.com';
