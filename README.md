@@ -40,12 +40,12 @@ ReCall is a full-stack note-taking application built using **React (Vite)** for 
 ### Frontend (`/frontend/ReCall`)
 
 src/
-    ├── components/ # Reusable UI components like Navbar, Cards, SearchBar, Toasts
-    ├── pages/ # Pages: Home, Login, Signup
-    ├── utils/ # Axios instance, constants, helpers
-    ├── assets/ # Images & icons
-    ├── App.jsx # Main app routing
-    ├── main.jsx # Entry point
+├── components/ # Reusable UI components like Navbar, Cards, SearchBar, Toasts
+├── pages/ # Pages: Home, Login, Signup   
+├── utils/ # Axios instance, constants, helpers
+├── assets/ # Images & icons
+├── App.jsx # Main app routing
+├── main.jsx # Entry point
 
 
 ### Backend (`/backend`)
@@ -132,4 +132,5 @@ This project is licensed under the MIT License.
 ## 👨‍💻 Author
 
 Chandana Prabhakar
-cp@devang@gmail.com
+
+cp.devang@gmail.com
