@@ -1,0 +1,9 @@
+[build]
+  base = "frontend/ReCall"
+  command = "npm run build"
+  publish = "frontend/ReCall/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
