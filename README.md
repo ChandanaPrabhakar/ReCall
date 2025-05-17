@@ -52,6 +52,7 @@ src/
 ### Backend (`/backend`)
 
 src/
+
     ├── controllers/ # Logic for notes & auth
     ├── models/ # Database models
     ├── routes/ # API endpoints
