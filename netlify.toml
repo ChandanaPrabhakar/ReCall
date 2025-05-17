@@ -1,7 +1,7 @@
 [build]
   base = "frontend/ReCall"
   command = "npm run build"
-  publish = "frontend/ReCall/dist"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"
