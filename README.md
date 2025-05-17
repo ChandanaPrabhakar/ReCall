@@ -129,7 +129,7 @@ Feel free to fork the repo, open issues, and submit pull requests. Bug fixes, en
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
