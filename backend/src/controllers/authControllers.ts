@@ -47,6 +47,7 @@ export const loginController = async (req: Request, res: Response): Promise<void
 
 export const getUserController = async (req: Request, res: Response): Promise<void> => {
     const { user } = req.user as jwt.JwtPayload;
+    console.log(user);
 
     try {
         const data = await getUserService(user._id);

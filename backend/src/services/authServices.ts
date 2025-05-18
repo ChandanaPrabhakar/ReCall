@@ -18,7 +18,7 @@ export const signupService = async (data: signupInput) => {
         await userDetails.save();
 
         const user = {
-            userId: userDetails._id,
+            "_id": userDetails._id,
             fullName: userDetails.fullName,
             email: userDetails.email
         }
@@ -63,7 +63,7 @@ export const loginService = async (email: string, password: string) => {
 
 
         const user = {
-            userId: userInfo._id,
+            "_id": userInfo._id,
             fullName: userInfo.fullName,
             email: userInfo.email,
         };
