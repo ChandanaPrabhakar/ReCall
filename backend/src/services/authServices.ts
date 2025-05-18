@@ -1,6 +1,7 @@
 import { signupInput } from "../models/signupInput.model";
 import { User, UserDBModel } from "../models/user.model";
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 export const signupService = async (data: signupInput) => {
     try {
@@ -10,10 +11,18 @@ export const signupService = async (data: signupInput) => {
             message: "User already exists, please login."
         };
 
-        const user = new UserDBModel(data);
-        await user.save();
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        const userData = { ...data, password: hashedPassword };
 
-        const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET as string,{expiresIn: '36000m'});
+        const userDetails = new UserDBModel(userData);
+        await userDetails.save();
+
+        const user = {
+            userId: userDetails._id,
+            email: userDetails.email
+        }
+
+        const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: '36000m' });
 
         return {
             success: true,
@@ -33,33 +42,38 @@ export const signupService = async (data: signupInput) => {
 };
 
 export const loginService = async (email: string, password: string) => {
-    try{
-        const userInfo = await UserDBModel.findOne({email: email});
+    try {
+        const userInfo = await UserDBModel.findOne({ email: email });
 
-        if(!userInfo){
+        if (!userInfo) {
             return {
                 success: false,
                 message: "User not found, Sign Up."
             }
         }
 
-        if(userInfo.email === email && userInfo.password === password){
-            const user = userInfo;
-            const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET as string, {expiresIn: "36000m"});
-
-            return {
-                success: true,
-                email: email,
-                accessToken,
-                message: "Login successful"
-            }
-        }else{
+        const isPasswordValid = await bcrypt.compare(password, userInfo.password);
+        if (!isPasswordValid) {
             return {
                 success: false,
-                message: "User not found"
-            }
+                message: "Invalid credentials"
+            };
         }
-    }catch(error) {
+
+
+        const user = {
+            userId: userInfo._id,
+            email: userInfo.email,
+        };
+        const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "36000m" });
+
+        return {
+            success: true,
+            email: email,
+            accessToken,
+            message: "Login successful"
+        }
+    } catch (error) {
         console.error("Error logging in", error);
         return {
             success: false,
@@ -68,24 +82,24 @@ export const loginService = async (email: string, password: string) => {
     }
 }
 
-export const getUserService = async(userId: string) =>{
-    try{
-        const userDetails = await UserDBModel.findOne({_id: userId});
+export const getUserService = async (userId: string) => {
+    try {
+        const userDetails = await UserDBModel.findOne({ _id: userId });
 
-        if(!userDetails){
-            return{
+        if (!userDetails) {
+            return {
                 success: false,
                 message: 'User not found.'
             }
         }
 
-        return{
+        return {
             success: true,
-            user: {fullName: userDetails.fullName, email: userDetails.email, "_id": userDetails._id, createdOn: userDetails.createdOn},
+            user: { fullName: userDetails.fullName, email: userDetails.email, "_id": userDetails._id, createdOn: userDetails.createdOn },
             message: 'User details retrieved successfully.'
         }
-    }catch(error){
-        return{
+    } catch (error) {
+        return {
             success: false,
             message: 'Unable to fetch user details.'
         }
