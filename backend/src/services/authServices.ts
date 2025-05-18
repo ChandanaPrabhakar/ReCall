@@ -19,6 +19,7 @@ export const signupService = async (data: signupInput) => {
 
         const user = {
             userId: userDetails._id,
+            fullName: userDetails.fullName,
             email: userDetails.email
         }
 
@@ -63,6 +64,7 @@ export const loginService = async (email: string, password: string) => {
 
         const user = {
             userId: userInfo._id,
+            fullName: userInfo.fullName,
             email: userInfo.email,
         };
         const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "36000m" });
