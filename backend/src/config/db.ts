@@ -1,5 +1,6 @@
 import mongoose, { mongo } from "mongoose";
 
+//Database connection
 
 export const databaseConnection = async() =>{
     const MONGO_URI = process.env.MONGO_URI;

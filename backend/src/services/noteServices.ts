@@ -1,5 +1,7 @@
 import NoteDBModel from "../models/note.model";
 
+// Add Note Service
+
 export const addNoteService = async (title: string, content: string, tags: string[], userId: string) => {
 
   try {
@@ -25,6 +27,8 @@ export const addNoteService = async (title: string, content: string, tags: strin
     };
   }
 };
+
+// Edit Note Service
 
 export const editNoteService = async (noteId: string, title: string, content: string, tags: string[], isPinned: boolean, userId: string) => {
   const note = await NoteDBModel.findOne({ _id: noteId, userId: userId });
@@ -55,9 +59,9 @@ export const editNoteService = async (noteId: string, title: string, content: st
       message: "Failed to update note."
     }
   }
-
-
 }
+
+// Pin Note Service
 
 export const updateNotePinnedService = async (noteId: string, isPinned: boolean, userId: string) => {
   const note = await NoteDBModel.findOne({ _id: noteId, userId: userId });
@@ -87,6 +91,8 @@ export const updateNotePinnedService = async (noteId: string, isPinned: boolean,
   }
 }
 
+// Get All Note Service
+
 export const getAllNotesService = async (userId: string) => {
   try {
     const notes = await NoteDBModel.find({ userId: userId }).sort({ isPinned: -1 });
@@ -102,6 +108,8 @@ export const getAllNotesService = async (userId: string) => {
     }
   }
 }
+
+// Delete Note Service
 
 export const deleteNoteService = async (noteId: string, userId: string) => {
 
@@ -129,6 +137,8 @@ export const deleteNoteService = async (noteId: string, userId: string) => {
   }
 }
 
+// Search Note Service
+
 export const searchNoteService = async (userId: string, query: string) => {
   try {
 
@@ -138,7 +148,8 @@ export const searchNoteService = async (userId: string, query: string) => {
       userId: userId,
       $or: [
         { title: { $regex: new RegExp(query, "i") } },
-        { content: { $regex: new RegExp(query, "i") } }
+        { content: { $regex: new RegExp(query, "i") } },
+        {tags: { $regex: new RegExp(query, "i") }},
       ]
     })
 

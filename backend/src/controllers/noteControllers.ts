@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import { addNoteService, editNoteService, updateNotePinnedService, getAllNotesService, deleteNoteService, searchNoteService } from "../services/noteServices";
 
+// Add Note Controller
+
 export const addNoteController = async (req: Request, res: Response): Promise<void> => {
     const { title, content, tags } = req.body;
     const { user } = req.user as jwt.JwtPayload;
@@ -19,6 +21,8 @@ export const addNoteController = async (req: Request, res: Response): Promise<vo
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+// Edit Note Controller
 
 export const editNoteController = async (req: Request, res: Response): Promise<void> => {
     const { noteId } = req.params;
@@ -41,6 +45,8 @@ export const editNoteController = async (req: Request, res: Response): Promise<v
     }
 }
 
+// Pin Note Controller
+
 export const updateNotePinnedController = async (req: Request, res: Response): Promise<void> => {
     const { noteId } = req.params;
     const { isPinned } = req.body;
@@ -59,6 +65,8 @@ export const updateNotePinnedController = async (req: Request, res: Response): P
     }
 }
 
+// Get All Notes Controller
+
 export const getAllNotesController = async (req: Request, res: Response): Promise<void> => {
     const { user } = req.user as jwt.JwtPayload;
 
@@ -70,6 +78,8 @@ export const getAllNotesController = async (req: Request, res: Response): Promis
         res.status(500).json({ message: 'Internal serer error' });
     }
 }
+
+// Delete Note Controller
 
 export const deleteNoteController = async (req: Request, res: Response): Promise<void> => {
     const { noteId } = req.params;
@@ -86,6 +96,8 @@ export const deleteNoteController = async (req: Request, res: Response): Promise
         res.status(500).json({ message: 'Internal server error' });
     }
 }
+
+// Search Note Controller
 
 export const searchNoteController = async (req: Request, res: Response): Promise<void> => {
     const { user } = req.user as jwt.JwtPayload;

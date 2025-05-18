@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { signupService, loginService, getUserService } from "../services/authServices";
 import jwt from 'jsonwebtoken';
 
+//Sign Up Auth Controller
+
 export const signupController = async (req: Request, res: Response): Promise<void> => {
     const { fullName, email, password } = req.body;
 
@@ -22,6 +24,8 @@ export const signupController = async (req: Request, res: Response): Promise<voi
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+//Login Auth Controller
 
 export const loginController = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
@@ -44,6 +48,8 @@ export const loginController = async (req: Request, res: Response): Promise<void
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+//Get User Details Auth Controller
 
 export const getUserController = async (req: Request, res: Response): Promise<void> => {
     const { user } = req.user as jwt.JwtPayload;

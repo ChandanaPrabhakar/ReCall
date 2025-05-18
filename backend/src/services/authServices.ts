@@ -3,6 +3,8 @@ import { User, UserDBModel } from "../models/user.model";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
+// Sign Up Auth Service
+
 export const signupService = async (data: signupInput) => {
     try {
         const existingUser = await UserDBModel.findOne({ email: data.email });
@@ -41,6 +43,8 @@ export const signupService = async (data: signupInput) => {
         };
     }
 };
+
+// Login Auth Service
 
 export const loginService = async (email: string, password: string) => {
     try {
@@ -83,6 +87,8 @@ export const loginService = async (email: string, password: string) => {
         }
     }
 }
+
+// Get User Auth Service
 
 export const getUserService = async (userId: string) => {
     try {

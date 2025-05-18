@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
+// Authentication Token Verification Middleware
+
 export const authenticationToken = (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
