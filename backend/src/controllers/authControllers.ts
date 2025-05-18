@@ -35,6 +35,7 @@ export const loginController = async (req: Request, res: Response): Promise<void
 
         if (!data?.success) {
             res.status(404).json({ message: data?.message });
+            return;
         }
         res.status(200).json({ data });
 
